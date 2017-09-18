@@ -4,10 +4,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import guanziqiang.entities.UserDO;
+import guanziqiang.service.UserService;
 
 /**
  * Created by GeYi on 2017/7/9.
@@ -16,41 +21,35 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/user")
 public class UserController {
 
-    private HttpSession httpSession;
-
-    private int testInt = 0;
+	@Autowired
+    private UserService userService;
 
     @ModelAttribute
     public void testDanLi(HttpServletRequest request, HttpServletResponse response){
-        this.httpSession = request.getSession();
+    	
     }
 
-    @RequestMapping("/login")
+    @RequestMapping(value="/signUp")
     @ResponseBody
-    public Object login(HttpServletRequest request, HttpServletResponse response){
-        System.out.println("======logoin=====");
+    public Object signUp(HttpServletRequest request, HttpServletResponse response, UserDO userDO){
+    	userService.insert(userDO);
+    	return "success";
+    }
+    
+    @RequestMapping("/signIn")
+    @ResponseBody
+    public Object signIn(HttpServletRequest request, HttpServletResponse response){
+        System.out.println("======signIn=====");
         System.out.println(this);
-        System.out.println(testInt++);
 
-//        System.out.println(request.getSession());
-//        System.out.println(request.getSession().getId());
-//
-//        System.out.println(this.httpSession);
-//        System.out.println(this.httpSession.getId());
-
-
-//        request.getSession().setAttribute("loginName","test");
-//        response.addCookie(new Cookie("cookieTest","testCookie"));
-//        response.addCookie(new Cookie("userName","WYM"));
         return "success";
     }
 
-    @RequestMapping("/logout")
+    @RequestMapping("/signOut")
     @ResponseBody
-    public Object logout(HttpServletRequest request){
-        System.out.println("======logout=====");
+    public Object signOut(HttpServletRequest request){
+        System.out.println("======signOut=====");
         System.out.println(this);
-        System.out.println(testInt = -1);
 //        System.out.println(request.getSession().getAttribute("loginName"));
 //        System.out.println(request.getSession().getId());
 //        System.out.println(request.getAttribute("loginName"));

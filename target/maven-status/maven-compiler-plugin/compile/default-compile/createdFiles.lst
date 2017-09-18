@@ -1,0 +1,3 @@
+guanziqiang\controller\UserController.class
+guanziqiang\controller\uploadController.class
+guanziqiang\core\mongodb\MongoDBConnection.class

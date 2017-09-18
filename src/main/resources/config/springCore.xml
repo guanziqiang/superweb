@@ -1,55 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <context:component-scan base-package="com.github" use-default-filters="true">
-        <context:exclude-filter type="annotation"
-                                expression="org.springframework.stereotype.Controller"/>
-    </context:component-scan>
+	<context:component-scan base-package="guanziqiang"
+		use-default-filters="true">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
 
-    <!--&lt;!&ndash; 加载资源文件 &ndash;&gt;-->
-    <!--<bean id="datasource"-->
-          <!--class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver"/>-->
-        <!--<property name="url" value="jdbc:mysql://127.0.0.1:3306/websocket"/>-->
-        <!--<property name="username" value="root"/>-->
-        <!--<property name="password" value="123456"/>-->
-    <!--</bean>-->
+	<!-- 加载资源文件 -->
+	<bean id="datasource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/superweb" />
+		<property name="username" value="root" />
+		<property name="password" value="gzq123" />
+	</bean>
 
-    <!--&lt;!&ndash; 配置session工厂 &ndash;&gt;-->
-    <!--<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">-->
-        <!--<property name="dataSource" ref="datasource"/>-->
-        <!--<property name="typeAliasesPackage" value="cn.com.szzt.entities"/>-->
-        <!--<property name="mapperLocations" value="classpath:cn/com/szzt/mybatis/mapper/*.xml"/>-->
-        <!--<property name="configLocation" value="classpath:/conspringMybatis.xml.xml"/>-->
-    <!--</bean>-->
+	<!-- 配置session工厂 -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="datasource" />
+		<property name="typeAliasesPackage" value="guanziqiang.entities" />
+		<property name="mapperLocations" value="classpath:/mybatisMapper/*.xml" />
+		<property name="configLocation" value="classpath:/config/springMybatis.xml" />
+	</bean>
 
-    <!--<bean id="mapperScannerConfigurer"-->
-          <!--class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
-        <!--<property name="basePackage" value="cn.com.szzt.mybatis.mapper"/>-->
-        <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>-->
-    <!--</bean>-->
+	<bean id="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="guanziqiang.dao.mybatis" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean" />
+	</bean>
 
-    <!--<bean id="dataSourceTransactionManager"-->
-          <!--class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
-        <!--<property name="dataSource" ref="datasource"/>-->
-    <!--</bean>-->
+	<bean id="dataSourceTransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="datasource" />
+	</bean>
 
-    <!--<tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>-->
+	<tx:annotation-driven transaction-manager="dataSourceTransactionManager" />
 
-
-    <bean id="crawlerExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
-        <!-- 核心线程数 -->
-        <property name="corePoolSize" value="10" />
-        <!-- 最大线程数 -->
-        <property name="maxPoolSize" value="50" />
-        <!-- 最大队列数 -->
-        <property name="queueCapacity" value="10000" />
-        <!-- 线程池维护线程所允许的空闲时间 -->
-        <property name="keepAliveSeconds" value="60" />
-    </bean>
+	<bean id="crawlerExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 核心线程数 -->
+		<property name="corePoolSize" value="10" />
+		<!-- 最大线程数 -->
+		<property name="maxPoolSize" value="50" />
+		<!-- 最大队列数 -->
+		<property name="queueCapacity" value="10000" />
+		<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name="keepAliveSeconds" value="60" />
+	</bean>
 
 </beans>
